@@ -6,10 +6,12 @@ from users.views import UserViewSet  # Импортируем ViewSet для п�
 
 router = DefaultRouter()
 router.register(r"courses", CourseViewSet)  # Регистрируем ViewSet для курсов
-router.register(r'users', UserViewSet)  # Регистрируем ViewSet для пользователей
+router.register(r"users", UserViewSet)  # Регистрируем ViewSet для пользователей
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(router.urls)),  # Подключаем маршруты API для курсов и пользователей
+    path(
+        "api/", include(router.urls)
+    ),  # Подключаем маршруты API для курсов и пользователей
     path("api/", include("learning.urls")),  # Подключаем отдельные маршруты для уроков
 ]
