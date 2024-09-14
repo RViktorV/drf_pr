@@ -8,11 +8,12 @@ router.register(r"courses", CourseViewSet)  # Регистрируем ViewSet �
 
 urlpatterns = [
     path("lessons/", LessonListCreateView.as_view(), name="lesson-list-create"),
-    path("lessons/<int:pk>/",
-         LessonRetrieveUpdateDestroyView.as_view(),
-         name="lesson-detail",
-         ),
-
-    path("", include(router.urls)),  # Подключаем маршруты API для курсов и пользователей
+    path(
+        "lessons/<int:pk>/",
+        LessonRetrieveUpdateDestroyView.as_view(),
+        name="lesson-detail",
+    ),
+    path(
+        "", include(router.urls)
+    ),  # Подключаем маршруты API для курсов и пользователей
 ]
-

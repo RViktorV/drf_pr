@@ -8,6 +8,7 @@ from learning.models import Course, Lesson
 
 NULLABLE = {"blank": True, "null": True}
 
+
 class Users(AbstractUser):
     username = None  # Убираем поле username
     email = models.EmailField(
@@ -47,19 +48,35 @@ class Users(AbstractUser):
 
 
 class Payment(models.Model):
-    CASH = 'cash'
-    BANK_TRANSFER = 'bank_transfer'
+    CASH = "cash"
+    BANK_TRANSFER = "bank_transfer"
 
     PAYMENT_METHOD_CHOICES = [
-        (CASH, 'Наличные'),
-        (BANK_TRANSFER, 'Перевод на счет'),
+        (CASH, "Наличные"),
+        (BANK_TRANSFER, "Перевод на счет"),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
     payment_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата оплаты")
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Оплаченный курс")
-    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Оплаченный урок")
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Сумма оплаты")
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Оплаченный курс",
+    )
+    lesson = models.ForeignKey(
+        Lesson,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Оплаченный урок",
+    )
+    amount = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Сумма оплаты"
+    )
     payment_method = models.CharField(
         max_length=20, choices=PAYMENT_METHOD_CHOICES, verbose_name="Способ оплаты"
     )
@@ -69,4 +86,6 @@ class Payment(models.Model):
         verbose_name_plural = "Платежи"
 
     def __str__(self):
-        return f"{self.user.email} - {self.amount} ({self.get_payment_method_display()})"
+        return (
+            f"{self.user.email} - {self.amount} ({self.get_payment_method_display()})"
+        )

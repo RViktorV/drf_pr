@@ -7,6 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from users.filters import PaymentFilter
 
+
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UsersSerializer
@@ -19,5 +20,5 @@ class PaymentViewSet(viewsets.ModelViewSet):
     filterset_class = PaymentFilter
 
     # Сортировка по дате оплаты
-    ordering_fields = ['payment_date']
-    ordering = ['-payment_date']  # По умолчанию сортировка по убыванию даты
+    ordering_fields = ["payment_date"]
+    ordering = ["-payment_date"]  # По умолчанию сортировка по убыванию даты

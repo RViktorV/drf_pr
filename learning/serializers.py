@@ -8,7 +8,6 @@ class LessonSerializer(serializers.ModelSerializer):
         fields = ["id", "course", "title", "description", "preview", "video_url"]
 
 
-
 class CourseSerializer(serializers.ModelSerializer):
     # Поле для вывода количества уроков в курсе
     number_of_lessons = serializers.SerializerMethodField()
@@ -18,7 +17,14 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'preview', 'number_of_lessons', 'lessons']  # Добавляем поле в список полей
+        fields = [
+            "id",
+            "title",
+            "description",
+            "preview",
+            "number_of_lessons",
+            "lessons",
+        ]  # Добавляем поле в список полей
 
     def get_number_of_lessons(self, obj):
         return obj.lessons.count()  # Считаем количество связанных уроков
