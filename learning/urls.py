@@ -15,3 +15,4 @@ urlpatterns = [
 
     path("", include(router.urls)),  # Подключаем маршруты API для курсов и пользователей
 ]
+
