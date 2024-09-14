@@ -5,13 +5,17 @@ from users.views import (
     PaymentViewSet,
 )  # Импортируем ViewSet для пользователей и платежей
 
-
+# Создаем роутер для автоматической генерации маршрутов для ViewSet'ов
 router = DefaultRouter()
-router.register(r"users", UsersViewSet)  # Регистрируем ViewSet для пользователей
-router.register(r"payments", PaymentViewSet)  # Регистрируем ViewSet для платежей
+
+# Регистрируем ViewSet для пользователей
+router.register(r"users", UsersViewSet)
+
+# Регистрируем ViewSet для платежей
+router.register(r"payments", PaymentViewSet)
 
 urlpatterns = [
     path(
         "", include(router.urls)
-    ),  # Подключаем маршруты API для курсов и пользователей
+    ),  # Подключаем маршруты, сгенерированные роутером, для API
 ]
