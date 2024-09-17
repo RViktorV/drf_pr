@@ -1,10 +1,17 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from users.views import UsersViewSet  # Импортируем ViewSet для пользователей
+from users.apps import UsersConfig
+from users.views import UsersViewSet, UsersCreateAPIView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+app_name = UsersConfig.name
 
 router = DefaultRouter()
-router.register(r"users", UsersViewSet)  # Регистрируем ViewSet для пользователей
+router.register(r"users", UsersViewSet)  # CRUD для пользователей
 
 urlpatterns = [
-    path("", include(router.urls)),  # Подключаем маршруты API для курсов и пользователей
+    path("", include(router.urls)),
+    path('login/', TokenObtainPairView.as_view(), name='login'),  # JWT авторизация
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Обновление токена
+    path('register/', UsersCreateAPIView.as_view(), name='register'),  # Регистрация
 ]

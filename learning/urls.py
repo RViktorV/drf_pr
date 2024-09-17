@@ -3,6 +3,8 @@ from .views import LessonListCreateView, LessonRetrieveUpdateDestroyView
 from rest_framework.routers import DefaultRouter
 from learning.views import CourseViewSet  # Импортируем ViewSet из приложения learning
 
+app_name = "learning"  # Указываем имя приложения для неймспейсов
+
 router = DefaultRouter()
 router.register(r"courses", CourseViewSet)  # Регистрируем ViewSet для курсов
 

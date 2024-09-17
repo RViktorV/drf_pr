@@ -11,4 +11,9 @@ class CourseSerializer(serializers.ModelSerializer):
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
-        fields = ["id", "course", "title", "description", "preview", "video_url"]
+        fields = ['id', 'title', 'course', 'owner']
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['owner'] = user
+        return super().create(validated_data)

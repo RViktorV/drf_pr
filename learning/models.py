@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 NULLABLE = {"blank": True, "null": True}
 
@@ -11,6 +12,7 @@ class Course(models.Model):
     description = models.TextField(
         **NULLABLE, verbose_name="Описание курса", help_text="Описание курса"
     )
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='courses')
 
     class Meta:
         verbose_name = "Курс"
@@ -27,6 +29,7 @@ class Lesson(models.Model):
         **NULLABLE, verbose_name="Описание урока", help_text=" Укажите описание урока"
     )
     preview = models.ImageField(upload_to="lesson_previews/")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lessons')
 
     class Meta:
         verbose_name = "Урок"
