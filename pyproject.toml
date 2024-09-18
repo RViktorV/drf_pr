@@ -16,6 +16,7 @@ phonenumbers = "^8.13.45"
 django-countries = "^7.6.1"
 django-phonenumber-field = "^8.0.0"
 django = "4.2"
+rest-framework-simplejwt = "^0.0.2"
 
 
 [build-system]
