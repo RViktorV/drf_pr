@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 
+from .paginators import CustomPagination
+
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -28,6 +30,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]  # Только авторизованные пользователи
+    pagination_class = CustomPagination
 
     def get_permissions(self):
         if self.action in ['update', 'partial_update', 'destroy']:
@@ -52,6 +55,7 @@ class LessonListCreateView(generics.ListCreateAPIView):
     """
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    pagination_class = CustomPagination
 
     def get_permissions(self):
         if self.request.method == 'POST':
