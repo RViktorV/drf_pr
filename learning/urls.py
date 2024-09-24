@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import LessonListCreateView, LessonRetrieveUpdateDestroyView
+from .views import LessonListCreateView, LessonRetrieveUpdateDestroyView, CourseSubscriptionAPIView
 from rest_framework.routers import DefaultRouter
 from learning.views import CourseViewSet  # Импортируем ViewSet из приложения learning
 
@@ -18,4 +18,5 @@ urlpatterns = [
     path(
         "", include(router.urls)
     ),  # Подключаем маршруты API для курсов и пользователей
+    path('subscribe/', CourseSubscriptionAPIView.as_view(), name='course-subscription'),
 ]
