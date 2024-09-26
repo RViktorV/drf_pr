@@ -28,6 +28,6 @@ class PaymentFilter(filters.FilterSet):
         - model: Payment — модель, для которой настраивается фильтрация.
         - fields: перечисление полей, по которым возможна фильтрация.
         """
+
         model = Payment
         fields = ["course", "lesson", "payment_method"]
-

@@ -13,7 +13,6 @@ from django.shortcuts import get_object_or_404
 from .paginators import CustomPagination
 
 
-
 class CourseViewSet(viewsets.ModelViewSet):
     """
     ViewSet для управления курсами (Course).
@@ -27,15 +26,16 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     Использует сериализатор `CourseSerializer`.
     """
+
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]  # Только авторизованные пользователи
     pagination_class = CustomPagination
 
     def get_permissions(self):
-        if self.action in ['update', 'partial_update', 'destroy']:
+        if self.action in ["update", "partial_update", "destroy"]:
             self.permission_classes = [IsOwnerOrModerator]
-        elif self.action == 'create':
+        elif self.action == "create":
             self.permission_classes = [IsAuthenticated, ~IsModerator]
         return [permission() for permission in self.permission_classes]
 
@@ -53,12 +53,13 @@ class LessonListCreateView(generics.ListCreateAPIView):
 
     Использует сериализатор `LessonSerializer`.
     """
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     pagination_class = CustomPagination
 
     def get_permissions(self):
-        if self.request.method == 'POST':
+        if self.request.method == "POST":
             self.permission_classes = [IsAuthenticated, ~IsModerator]
         else:
             self.permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
@@ -66,6 +67,7 @@ class LessonListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 class LessonRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -78,11 +80,12 @@ class LessonRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     Использует сериализатор `LessonSerializer`.
     """
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
     def get_permissions(self):
-        if self.request.method == 'DELETE':
+        if self.request.method == "DELETE":
             self.permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
         else:
             self.permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
@@ -92,7 +95,7 @@ class LessonRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 class CourseSubscriptionAPIView(APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
-        course_id = request.data.get('course_id')
+        course_id = request.data.get("course_id")
         course = get_object_or_404(Course, id=course_id)
 
         # Ищем существующую подписку
@@ -100,9 +103,9 @@ class CourseSubscriptionAPIView(APIView):
 
         if subscription.exists():
             subscription.delete()
-            message = 'Подписка удалена'
+            message = "Подписка удалена"
         else:
             Subscription.objects.create(user=user, course=course)
-            message = 'Подписка добавлена'
+            message = "Подписка добавлена"
 
         return Response({"message": message}, status=status.HTTP_200_OK)

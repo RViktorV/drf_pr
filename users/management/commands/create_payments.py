@@ -13,6 +13,7 @@ class Command(BaseCommand):
 
     В случае успеха выводит сообщение "Данные успешно созданы!".
     """
+
     help = "Создание тестовых данных для платежей"
 
     def handle(self, *args, **kwargs):
@@ -45,4 +46,3 @@ class Command(BaseCommand):
 
         # Выводим сообщение о успешном создании данных
         self.stdout.write(self.style.SUCCESS("Данные успешно созданы!"))
-

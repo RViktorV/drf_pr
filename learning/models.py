@@ -12,7 +12,12 @@ class Course(models.Model):
     description = models.TextField(
         **NULLABLE, verbose_name="Описание курса", help_text="Описание курса"
     )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='courses')
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="courses",
+        **NULLABLE,
+    )
 
     class Meta:
         verbose_name = "Курс"
@@ -29,24 +34,32 @@ class Lesson(models.Model):
         **NULLABLE, verbose_name="Описание урока", help_text=" Укажите описание урока"
     )
     preview = models.ImageField(upload_to="lesson_previews/", **NULLABLE)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lessons')
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="lessons",
+        **NULLABLE,
+    )
+    video_url = models.URLField(**NULLABLE)
 
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
-
-    video_url = models.URLField(**NULLABLE)
 
     def __str__(self):
         return self.title
 
 
 class Subscription(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='subscriptions')
-    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='subscriptions')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="subscriptions"
+    )
+    course = models.ForeignKey(
+        "Course", on_delete=models.CASCADE, related_name="subscriptions"
+    )
 
     class Meta:
-        unique_together = ('user', 'course')
+        unique_together = ("user", "course")
 
     def __str__(self):
-        return f'{self.user} подписан на {self.course}'
+        return f"{self.user} подписан на {self.course}"
