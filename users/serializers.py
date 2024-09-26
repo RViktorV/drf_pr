@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import Users
+from users.models import Users, Payment
 
 
 class UsersSerializer(serializers.ModelSerializer):
@@ -27,3 +27,10 @@ class UsersSerializer(serializers.ModelSerializer):
         if password:
             instance.set_password(password)
         return super().update(instance, validated_data)
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
