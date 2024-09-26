@@ -137,4 +137,3 @@ class Payment(models.Model):
         return (
             f"{self.user.email} - {self.amount} ({self.get_payment_method_display()})"
         )
-
