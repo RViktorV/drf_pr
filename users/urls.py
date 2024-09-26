@@ -11,7 +11,9 @@ router.register(r"users", UsersViewSet)  # CRUD для пользователе�
 
 urlpatterns = [
     path("", include(router.urls)),
-    path('login/', TokenObtainPairView.as_view(), name='login'),  # JWT авторизация
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Обновление токена
-    path('register/', UsersCreateAPIView.as_view(), name='register'),  # Регистрация
+    path("login/", TokenObtainPairView.as_view(), name="login"),  # JWT авторизация
+    path(
+        "token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
+    ),  # Обновление токена
+    path("register/", UsersCreateAPIView.as_view(), name="register"),  # Регистрация
 ]
