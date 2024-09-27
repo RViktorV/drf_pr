@@ -21,7 +21,8 @@ class LessonTestCase(APITestCase):
         # Создать курс с назначенным владельцем
         self.course = Course.objects.create(title="Test Course", owner=self.user)
         self.subscription = Subscription.objects.create(
-            user=self.user, course=self.course  # Назначьте тестового пользователя владельцем
+            user=self.user,
+            course=self.course,  # Назначьте тестового пользователя владельцем
         )
         self.lesson = Lesson.objects.create(
             title="Test Lesson", course=self.course, owner=self.user
