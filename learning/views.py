@@ -12,6 +12,8 @@ from django.shortcuts import get_object_or_404
 
 from .paginators import CustomPagination
 
+from .tasks import send_course_update_email_async
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     """
@@ -42,6 +44,17 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)  # Привязываем курс к владельцу
 
+    def perform_update(self, serializer):
+        """
+        Переопределяет стандартное обновление курса с асинхронной отправкой уведомлений подписчикам.
+        """
+        course = self.get_object()
+
+        # Сохраняем изменения
+        serializer.save()
+
+        # Запускаем асинхронную задачу для отправки писем подписчикам
+        send_course_update_email_async.delay(course.id)
 
 class LessonListCreateView(generics.ListCreateAPIView):
     """
