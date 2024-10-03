@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "django_celery_beat",
     "drf_yasg",
+    "django_celery_beat"
     "users",
     "learning",
 ]
@@ -150,4 +151,3 @@ CELERY_BEAT_SCHEDULE = {
         },
     },
 }
-
