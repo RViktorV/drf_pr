@@ -18,6 +18,7 @@ class Course(models.Model):
         related_name="courses",
         **NULLABLE,
     )
+    updated_at = models.DateTimeField(auto_now=True)  # Обновляется автоматически при сохранении
 
     class Meta:
         verbose_name = "Курс"

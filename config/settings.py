@@ -131,15 +131,18 @@ SIMPLE_JWT = {
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
-CELERY_BROKER_URL = os.getenv('REDIS_URL')
-CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
+CELERY_BROKER_URL = 'redis://172.31.120.234:6379'
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULE = {}
 
 CELERY_BEAT_SCHEDULE = {
     'task-name': {
-        'task': 'learning.tasks.my_task',  # Путь к задаче
+        'task': 'users.tasks.my_task',  # Путь к задаче
         'schedule': timedelta(minutes=10),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
