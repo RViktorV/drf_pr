@@ -143,7 +143,7 @@ CELERY_BEAT_SCHEDULE = {}
 
 CELERY_BEAT_SCHEDULE = {
     'block-inactive-users-every-day': {
-        'task': 'edu.tasks.block_inactive_users',
+        'task': 'users.tasks.block_inactive_users',
         'schedule': crontab(hour=0, minute=0),  # Задача будет запускаться каждый день в полночь
         'options': {
             'expires': 3600,  # Задача истекает через час, чтобы не запускалась с опозданием
