@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "django_celery_beat",
     "drf_yasg",
-    "django_celery_beat"
     "users",
     "learning",
 ]
@@ -64,11 +63,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("NAME"),
-        "USER": "postgres",
-        "PASSWORD": os.getenv("PASSWORD"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST"),
+        "PORT": os.getenv("POSTGRES_PORT"),
     }
 }
 
@@ -101,9 +100,6 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.Users"
-
-# LOGIN_REDIRECT_URL = "/"
-# LOGOUT_REDIRECT_URL = "/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -138,16 +134,16 @@ CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
 CELERY_BEAT_SCHEDULE = {}
 
 CELERY_BEAT_SCHEDULE = {
-    'block-inactive-users-every-day': {
-        'task': 'users.tasks.block_inactive_users',
-        'schedule': crontab(hour=0, minute=0),  # Задача будет запускаться каждый день в полночь
-        'options': {
-            'expires': 3600,  # Задача истекает через час, чтобы не запускалась с опозданием
+    "block-inactive-users-every-day": {
+        "task": "users.tasks.block_inactive_users",
+        "schedule": crontab(hour=0, minute=0),  # Задача будет запускаться каждый день в полночь
+        "options": {
+            "expires": 3600,  # Задача истекает через час, чтобы не запускалась с опозданием
         },
     },
 }
